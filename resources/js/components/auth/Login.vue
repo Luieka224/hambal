@@ -1,7 +1,7 @@
 <template>
     <nav class="sticky top-0 z-50 flex justify-between px-32 py-6 bg-base-100/90 items-center backdrop-blur-md">
         <div>
-            <a href="/landing.html" class="text-3xl font-bold text-primary">Hambal</a>
+            <RouterLink to="/" class="text-3xl font-bold text-primary">Hambal</RouterLink>
         </div>
         <div class="space-x-4">
             <a class="uppercase font-medium text-sm">Login</a>
