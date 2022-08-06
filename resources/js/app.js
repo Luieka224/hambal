@@ -45,13 +45,10 @@ var isAuthenticated = false;
 
 router.beforeEach(async (to, from) => {
     axios.get('api/user', {
-        withCredentials: true
     })
         .then(res => {
-            // console.log(res)
             if (res.status === 200) {
                 console.log("authenticated")
-                router.push({ name: 'Home' })
                 isAuthenticated = true
             };
         })
@@ -64,11 +61,12 @@ router.beforeEach(async (to, from) => {
         })
 
 
-    if (!isAuthenticated && (to.name !== 'Login' && to.name !== 'Register' && to.name !== 'Landing')) {
+    if (!isAuthenticated && (to.name !== 'Login' && to.name !== 'Register' && to.name !== 'Landing' && to.name !== 'SendMessage')) {
         return {
             name: 'Login'
         }
-    } else if (isAuthenticated && (to.name == 'Login' || to.name == 'Register')) {
+    }
+    else if (isAuthenticated && (to.name == 'Login' || to.name == 'Register')) {
         return {
             name: 'Home'
         }
