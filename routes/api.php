@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+    Route::post('/check-slug', [UserController::class, 'checkSlug']);
     Route::get('/messages', [MessagesController::class, 'index']);
 });
 

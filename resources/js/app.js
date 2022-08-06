@@ -32,6 +32,11 @@ const router = createRouter({
             name: 'Home',
             component: Home,
         },
+        {
+            path: '/m/:slug',
+            name: 'SendMessage',
+            component: SendMessage,
+        },
     ]
 })
 
