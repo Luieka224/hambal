@@ -1,43 +1,93 @@
 <template>
-    <nav class="sticky top-0 z-50 flex justify-between px-32 py-6 bg-base-100/90 items-center backdrop-blur-md">
+    <nav
+        class="sticky top-0 z-50 flex justify-between px-4 lg:px-32 py-4 bg-base-100/90 items-center backdrop-blur-sm shadow-lg">
         <div>
             <RouterLink to="/" class="text-3xl font-bold text-primary">Hambal</RouterLink>
         </div>
         <div class="space-x-4">
-            <RouterLink to="/login" class="uppercase font-medium text-sm">Login</RouterLink>
-            <a class="font-medium btn btn-primary py-0 px-4">Register</a>
+            <a class="font-medium btn btn-primary btn-sm">Logout</a>
         </div>
     </nav>
     <main class="contain min-h-screen">
-        <div class="min-h-[10vh]"></div>
-        <h1 class="text-2xl text-center font-bold uppercase">Register</h1>
-        <div class="min-h-[3rem]"></div>
-        <form class="w-[40%] mx-auto space-y-4">
-            <div class="form-control">
-                <label class="label">
-                    <span class="label-text">Username</span>
-                </label>
-                <input type="text" name="username" v-model="username" placeholder="Username"
-                    class="input input-bordered" />
+        <div class="min-h-[1rem]"></div>
+        <div class="mx-32">
+            <span class="text-lg uppercase leading-none">
+                Hello there,
+                <br>
+                <span class="text-xl font-bold leading-none">{{ userDetails.username }}</span>
+            </span>
+        </div>
+        <div class="mx-32 flex space-x-16 mt-8">
+            <div class="space-y-4">
+                <div>
+                    <h1 class="text-xl uppercase mb-2">Your Link</h1>
+                    <div class="card card-compact w-96 bg-primary text-primary-content shadow-xl">
+                        <div class="card-body">
+                            <pre 
+                                class="text-base-content bg-base-100 rounded-lg p-4">http://localhost:8000/m/{{ userDetails.slug }}</pre>
+                            <div class="card-actions justify-end">
+                                <span class="btn btn-outline btn-sm text-primary-content" @click="copyToClipboard">Copy
+                                    Link</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="text-xl uppercase mb-2">Custom Message</h1>
+                    <div class="card card-compact w-96 bg-primary text-primary-content shadow-xl">
+                        <div class="card-body">
+                            <input class="input text-base-content" readonly placeholder="Send Me A Message!">
+                            <div class="card-actions justify-end">
+                                <button
+                                    class="btn btn-outline btn-sm text-primary-content disabled:text-primary-content"
+                                    disabled>Unlock to Set Message</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="text-xl uppercase mb-2">Custom Slug</h1>
+                    <div class="card card-compact w-96 bg-primary text-primary-content shadow-xl">
+                        <div class="card-body">
+                            <input class="input text-base-content read-only:text-black" disable
+                                placeholder="Unlock to Set Custom Slug">
+                            <div class="card-actions justify-end">
+                                <button
+                                    class="btn btn-outline btn-sm text-primary-content disabled:text-primary-content"
+                                    disabled>Unlock to Set Custom
+                                    Slug</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-control">
-                <label class="label">
-                    <span class="label-text">Password</span>
-                </label>
-                <input type="password" placeholder="Password" name="password" v-model="password"
-                    class="input input-bordered" />
+            <!-- Messages -->
+            <div class="space-y-4 flex-1">
+                <div class="flex justify-between">
+                    <h1 class="text-xl uppercase mb-4">Messages</h1>
+                    <!-- <span>Page 1 of 1</span> -->
+                </div>
+                <div class="overflow-y-scroll overflow-hidden p-4 max-h-[60%] space-y-4">
+                    <div class="card card-compact w-full bg-primary text-primary-content shadow-xl rounded-br-none">
+                        <div class="card-body">
+                            <p>If a dog chews shoes whose shoes does he choose?</p>
+                            <div class="card-actions justify-end">
+                                <span>Sent 3 mins ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-control">
-                <label class="label">
-                    <span class="label-text">Retype Password</span>
-                </label>
-                <input type="password" placeholder="Password" name="password_confirmation"
-                    v-model="password_confirmation" class="input input-bordered" />
+        </div>
+        <Transition>
+            <div v-if="isCopiedText" class="toast">
+                <div class="alert alert-info">
+                    <div>
+                        <span>Copied to Clipboard!</span>
+                    </div>
+                </div>
             </div>
-            <div class="form-control">
-                <span class="btn btn-primary" @click="registerUser">Register</span>
-            </div>
-        </form>
+        </Transition>
     </main>
     <footer class="footer py-10 px-32 bg-neutral text-neutral-content">
         <div>
@@ -87,29 +137,30 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            username: undefined,
-            password: undefined,
-            password_confirmation: undefined,
+            isCopiedText: false,
+            userDetails: [],
         }
     },
     methods: {
-        registerUser() {
-            axios.get('sanctum/csrf-cookie')
-                .then(() => {
-                    axios.post('api/register', {
-                        username: this.username,
-                        password: this.password,
-                        password_confirmation: this.password_confirmation,
-                    }).then(res => {
-                        console.log(res)
-                        if (res.status == (201 || 200)) this.$router.push('home');
-                    })
-                        .catch(error => {
-                            console.log(error)
-
-                        })
-                })
-        }
+        logout() {
+            axios.post('api/logout')
+                .then(res => console.log(res));
+        },
+        copyToClipboard() {
+            navigator.clipboard.writeText("http://localhost:8000/m/" + this.userDetails.slug);
+            this.isCopiedText = true;
+            setTimeout(() => this.isCopiedText = false, 3000);
+        },
+        refreshMessages() {
+            axios.get('api/messages')
+                .then(res => this.messages = res.data)
+        },
+    },
+    mounted() {
+        axios.get('api/user')
+            .then(res => {
+                this.userDetails = res.data
+            })
     }
 }
 </script>
