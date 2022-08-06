@@ -17,16 +17,16 @@
                 <label class="label">
                     <span class="label-text">Username</span>
                 </label>
-                <input type="text" placeholder="Username" class="input input-bordered" required />
+                <input type="text" name="username" v-model="username" placeholder="Username" class="input input-bordered" required />
             </div>
             <div class="form-control">
                 <label class="label">
                     <span class="label-text">Password</span>
                 </label>
-                <input type="password" placeholder="Password" class="input input-bordered" required />
+                <input type="password" v-model="password" name="password" placeholder="Password" class="input input-bordered" required />
             </div>
             <div class="form-control">
-                <a href="./home.html" class="btn btn-primary">Login</a>
+                <a class="btn btn-primary" @click="loginUser">Login</a>
             </div>
         </form>
     </main>
@@ -71,3 +71,35 @@
         </div>
     </footer>
 </template>
+
+<script>
+    import axios from 'axios';
+
+    export default {
+
+        data() {
+            return {
+                username: undefined,
+                password: undefined,
+            }
+        },
+        methods: {
+            loginUser() {
+                axios.post('api/login', {
+                    username: this.username,
+                    password: this.password,
+                }).then(res => {
+                    this.$router.push('/home');
+                })
+                .catch(res => {
+                    if(res.response.status == 401) {
+                        console.log(res);
+                    }
+                })
+            }
+        },
+        mounted() {
+           
+        }
+    }
+</script>
