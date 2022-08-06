@@ -50,7 +50,7 @@ export default {
             axios.post('api/login', {
                 username: this.username,
                 password: this.password,
-            }).then(res => {
+            }).then(() => {
                 this.$router.push('/home');
             })
                 .catch(res => {
