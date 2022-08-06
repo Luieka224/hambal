@@ -133,12 +133,14 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
     data() {
         return {
             isCopiedText: false,
             userDetails: [],
+            moment: moment
         }
     },
     methods: {
