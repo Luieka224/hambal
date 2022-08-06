@@ -16,10 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::get('/messages', [MessagesController::class, 'index']);
 });
 
-Route::get('userx', fn() => Auth::user());
-
-Route::post('/get-slug', [UserController::class, 'getSlug']);
+Route::post('/messages', [MessagesController::class, 'store']);
