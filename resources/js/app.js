@@ -5,6 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue'
 import Landing from './components/Landing.vue'
 import Home from './components/Home.vue'
+import SendMessage from './components/SendMessage.vue'
 import Login from './components/auth/Login.vue'
 import Register from './components/auth/Register.vue'
 
@@ -32,6 +33,11 @@ const router = createRouter({
             name: 'Home',
             component: Home,
         },
+        {
+            path: '/m/:slug',
+            name: 'SendMessage',
+            component: SendMessage,
+        },
     ]
 })
 
@@ -39,13 +45,10 @@ var isAuthenticated = false;
 
 router.beforeEach(async (to, from) => {
     axios.get('api/user', {
-        withCredentials: true
     })
         .then(res => {
-            // console.log(res)
             if (res.status === 200) {
                 console.log("authenticated")
-                router.push({ name: 'Home' })
                 isAuthenticated = true
             };
         })
@@ -58,11 +61,12 @@ router.beforeEach(async (to, from) => {
         })
 
 
-    if (!isAuthenticated && (to.name !== 'Login' && to.name !== 'Register' && to.name !== 'Landing')) {
+    if (!isAuthenticated && (to.name !== 'Login' && to.name !== 'Register' && to.name !== 'Landing' && to.name !== 'SendMessage')) {
         return {
             name: 'Login'
         }
-    } else if (isAuthenticated && (to.name == 'Login' || to.name == 'Register')) {
+    }
+    else if (isAuthenticated && (to.name == 'Login' || to.name == 'Register')) {
         return {
             name: 'Home'
         }
