@@ -36,7 +36,7 @@
                     <h1 class="text-xl uppercase mb-2">Custom Message</h1>
                     <div class="card card-compact w-96 bg-primary text-primary-content shadow-xl">
                         <div class="card-body">
-                            <input class="input text-base-content" readonly placeholder="Send Me A Message!">
+                            <input class="input text-base-content" readonly placeholder="Unlock to Send Me A Message">
                             <div class="card-actions justify-end">
                                 <button
                                     class="btn btn-outline btn-sm text-primary-content disabled:text-primary-content"
@@ -49,13 +49,14 @@
                     <h1 class="text-xl uppercase mb-2">Custom Slug</h1>
                     <div class="card card-compact w-96 bg-primary text-primary-content shadow-xl">
                         <div class="card-body">
-                            <input class="input text-base-content read-only:text-black" disable
+                            <input class="input text-base-content read-only:text-black" disable readonly
                                 placeholder="Unlock to Set Custom Slug">
                             <div class="card-actions justify-end">
                                 <button
                                     class="btn btn-outline btn-sm text-primary-content disabled:text-primary-content"
-                                    disabled>Unlock to Set Custom
-                                    Slug</button>
+                                    disabled>
+                                    Unlock to Set Custom Slug
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -75,7 +76,8 @@
                     </button>
                 </div>
                 <div class="overflow-y-scroll p-4 max-h-[65vh] min-h-[65vh] space-y-4">
-                    <div v-for="message of messages" class="card card-compact w-full bg-primary text-primary-content shadow-xl rounded-br-none">
+                    <div v-for="message of messages"
+                        class="card card-compact w-full bg-primary text-primary-content shadow-xl rounded-br-none">
                         <div class="card-body">
                             <p>{{ message.message }}</p>
                             <div class="card-actions justify-end">
@@ -109,6 +111,7 @@ export default {
             userDetails: [],
             messages: [],
             messagesLoaded: true,
+            moment: moment,
         }
     },
     methods: {
@@ -131,7 +134,7 @@ export default {
                     this.messagesLoaded = true;
                     this.messages = res.data;
                 })
-                // .then(res => console.log(res))
+            // .then(res => console.log(res))
         },
     },
     created() {
