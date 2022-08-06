@@ -35,6 +35,39 @@ const router = createRouter({
     ]
 })
 
+var isAuthenticated = false;
+
+router.beforeEach(async (to, from) => {
+    axios.get('api/user', {
+        withCredentials: true
+    })
+        .then(res => {
+            // console.log(res)
+            if (res.status === 200) {
+                console.log("authenticated")
+                router.push({ name: 'Home' })
+                isAuthenticated = true
+            };
+        })
+        .catch(res => {
+            if (res.response.status == 401) {
+                console.log('Unauthenticated');
+                isAuthenticated = false;
+            }
+            else console.log("An error with code:" + res.response.status + " occured. =(")
+        })
+
+
+    if (!isAuthenticated && (to.name !== 'Login' && to.name !== 'Register' && to.name !== 'Landing')) {
+        return {
+            name: 'Login'
+        }
+    } else if (isAuthenticated && (to.name == 'Login' || to.name == 'Register')) {
+        return {
+            name: 'Home'
+        }
+    }
+})
 
 createApp(App)
     .use(router)
