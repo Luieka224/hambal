@@ -5,6 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue'
 import Landing from './components/Landing.vue'
 import Home from './components/Home.vue'
+import SendMessage from './components/SendMessage.vue'
 import Login from './components/auth/Login.vue'
 import Register from './components/auth/Register.vue'
 
