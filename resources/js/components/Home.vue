@@ -5,7 +5,7 @@
             <RouterLink to="/" class="text-3xl font-bold text-primary">Hambal</RouterLink>
         </div>
         <div class="space-x-4">
-            <a class="font-medium btn btn-primary btn-sm">Logout</a>
+            <button type="button" class="font-medium btn btn-primary btn-sm" @click="logout">Logout</button>
         </div>
     </nav>
     <main class="contain min-h-screen">
@@ -114,7 +114,10 @@ export default {
     methods: {
         logout() {
             axios.post('api/logout')
-                .then(res => console.log(res));
+                .then(res => {
+                    console.log(res)
+                    this.$router.push({ name:"Landing" })
+                });
         },
         copyToClipboard() {
             navigator.clipboard.writeText("http://localhost:8000/m/" + this.userDetails.slug);
