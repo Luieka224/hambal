@@ -23,8 +23,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('user', fn() => Auth::user());
-    Route::post('/check-slug', [UserController::class, 'checkSlug']);
     Route::get('/messages', [MessagesController::class, 'index']);
 });
 
+Route::post('/check-slug', [UserController::class, 'checkSlug']);
 Route::post('/messages', [MessagesController::class, 'store']);
