@@ -1,5 +1,19 @@
 <template>
-    <router-view></router-view>
+    <nav class="sticky top-0 z-50 flex justify-between px-32 py-4 bg-base-100/90 items-center backdrop-blur-md">
+        <div>
+            <RouterLink :to="{ name: 'Landing' }" class="text-3xl font-bold text-primary">Hambal</RouterLink>
+        </div>
+        <div class="space-x-4" v-if="isHome">
+            <button type="button" class="font-medium btn btn-primary py-0 px-4" @click="logoutUser">Logout</button>
+        </div>
+        <div class="space-x-4" v-if="!isHome">
+            <RouterLink :to="{ name: 'Login' }" class="uppercase font-medium text-sm">Login</RouterLink>
+            <RouterLink :to="{ name: 'Register' }" class="font-medium btn btn-primary py-0 px-4">Register</RouterLink>
+        </div>
+    </nav>
+    <main class="contain min-h-screen">
+        <router-view></router-view>
+    </main>
     <footer class="footer py-10 px-32 bg-neutral text-neutral-content">
         <div>
             <svg width="50" height="50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd"
@@ -41,3 +55,30 @@
         </div>
     </footer>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            isHome: false,
+        }
+    },
+    methods: {
+        logoutUser() {
+            axios.post('api/logout')
+                .then(res => {
+                    this.$router.push({ name: "Landing" })
+                });
+        },
+    },
+    watch: {
+        $route(to, from) {
+            if (to.name == 'Home') {
+                this.isHome = true;
+            } else {
+                this.isHome = false;
+            }
+        }
+    }
+}
+</script>

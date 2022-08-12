@@ -1,36 +1,25 @@
 <template>
-    <nav
-        class="sticky top-0 z-50 flex justify-between px-4 lg:px-32 py-4 bg-base-100/90 items-center backdrop-blur-sm shadow-lg">
-        <div>
-            <RouterLink to="/" class="text-3xl font-bold text-primary">Hambal</RouterLink>
+    <div class="min-h-[3rem]"></div>
+    <h1 class="text-2xl text-center font-bold uppercase">Send Me a Message!</h1>
+    <div class="min-h-[3rem]"></div>
+    <form action="" class="w-[40%] mx-auto space-y-4">
+        <div class="w-full">
+            <textarea v-model="message" type="text" placeholder="Send Me a Message"
+                class="textarea textarea-bordered max-h-[30vh] w-full"></textarea>
         </div>
-        <div class="space-x-4">
-            <a class="font-medium btn btn-primary btn-sm">Logout</a>
+        <div class="form-control">
+            <button type="button" class="btn btn-primary" @click="sendMessage">Send</button>
         </div>
-    </nav>
-    <main class="contain min-h-screen">
-        <div class="min-h-[3rem]"></div>
-        <h1 class="text-2xl text-center font-bold uppercase">Send Me a Message!</h1>
-        <div class="min-h-[3rem]"></div>
-        <form action="" class="w-[40%] mx-auto space-y-4">
-            <div class="w-full">
-                <textarea v-model="message" type="text" placeholder="Send Me a Message"
-                    class="textarea textarea-bordered max-h-[30vh] w-full"></textarea>
-            </div>
-            <div class="form-control">
-                <button type="button" class="btn btn-primary" @click="sendMessage">Send</button>
-            </div>
-        </form>
-        <Transition>
-            <div v-if="messageSent" class="toast">
-                <div class="alert alert-info">
-                    <div>
-                        <span>Message is Sent!</span>
-                    </div>
+    </form>
+    <Transition>
+        <div v-if="messageSent" class="toast">
+            <div class="alert alert-info">
+                <div>
+                    <span>Message is Sent!</span>
                 </div>
             </div>
-        </Transition>
-    </main>
+        </div>
+    </Transition>
 </template>
 
 <script>
@@ -64,7 +53,7 @@ export default {
                 message: this.message,
             })
                 .then(res => {
-                    if(res.status == 201) {
+                    if (res.status == 201) {
                         this.setMessageSent()
                         this.message = ""
                     }
