@@ -53,7 +53,7 @@ export default {
                 message: this.message,
             })
                 .then(res => {
-                    if(res.status == 201) {
+                    if (res.status == 201) {
                         this.setMessageSent()
                         this.message = ""
                     }
