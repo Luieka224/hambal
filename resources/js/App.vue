@@ -55,3 +55,30 @@
         </div>
     </footer>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            isHome: false,
+        }
+    },
+    methods: {
+        logoutUser() {
+            axios.post('api/logout')
+                .then(res => {
+                    this.$router.push({ name: "Landing" })
+                });
+        },
+    },
+    watch: {
+        $route(to, from) {
+            if (to.name == 'Home') {
+                this.isHome = true;
+            } else {
+                this.isHome = false;
+            }
+        }
+    }
+}
+</script>
