@@ -21,7 +21,15 @@
             <a class="btn btn-primary" @click="loginUser">Login</a>
         </div>
     </form>
-    </main>
+    <Transition>
+        <div v-if="loginError" class="toast">
+            <div class="alert alert-info">
+                <div>
+                    <span>Invalid Credentials!</span>
+                </div>
+            </div>
+        </div>
+    </Transition>
 </template>
 
 <script>
@@ -44,6 +52,7 @@ export default {
         return {
             username: undefined,
             password: undefined,
+            loginError: false,
         }
     },
     methods: {
@@ -51,30 +60,17 @@ export default {
             axios.post('api/login', {
                 username: this.username,
                 password: this.password,
-            }).then(() => {
-                this.$router.push('/home');
             })
+                .then(() => {
+                    this.$router.push({ name: "Home" })
+                })
                 .catch(res => {
-                    if (res.response.status == 401) {
-                        console.log(res);
+                    if (res.response.status == 422) {
+                        this.loginError = true
+                        setTimeout(() => this.loginError = false, 3000);
                     }
                 })
         }
     },
-    beforeCreate() {
-        axios.get('api/user', {
-        })
-            .then(res => {
-                if (res.status === 200) {
-                    this.$router.push({ name: 'Home' })
-                };
-            })
-            .catch(res => {
-                if (res.response.status == 401) {
-                    console.log('Unauthenticated');
-                }
-                else console.log("An error with code:" + res.response.status + " occured. =(")
-            })
-    }
 }
 </script>
