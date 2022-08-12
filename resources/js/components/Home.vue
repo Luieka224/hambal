@@ -116,13 +116,6 @@ export default {
         }
     },
     methods: {
-        logout() {
-            axios.post('api/logout')
-                .then(res => {
-                    console.log(res)
-                    this.$router.push({ name:"Landing" })
-                });
-        },
         copyToClipboard() {
             navigator.clipboard.writeText("http://localhost:8000/m/" + this.userDetails.slug);
             this.isCopiedText = true;
