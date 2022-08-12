@@ -105,6 +105,19 @@ import axios from 'axios'
 import moment from 'moment'
 
 export default {
+    beforeRouteEnter(routeTo, routeFrom, next) {
+        axios.get('api/user', {
+        })
+            .then(res => {
+                console.log(res.data);
+                if (res.status === 200) {
+                    next(vm => { })
+                };
+            })
+            .catch(res => {
+                next({ name: 'Login' })
+            })
+    },
     data() {
         return {
             isCopiedText: false,

@@ -45,6 +45,18 @@
 import axios from 'axios'
 
 export default {
+    beforeRouteEnter(routeTo, routeFrom, next) {
+        axios.get('api/user', {
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    next({ name: 'Home' })
+                };
+            })
+            .catch(res => {
+                next(vm => { })
+            })
+    },
     data() {
         return {
             username: undefined,
