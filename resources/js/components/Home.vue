@@ -64,7 +64,7 @@
                 </button>
             </div>
             <div class="overflow-y-scroll p-4 max-h-[65vh] min-h-[65vh] space-y-4">
-                    <div v-for="message of messages"
+                <div v-for="message of messages" :key="messageKey"
                     class="card card-compact w-full bg-primary text-primary-content shadow-xl rounded-br-none">
                     <div class="card-body">
                         <p>{{ message.message }}</p>
@@ -112,6 +112,7 @@ export default {
             messages: [],
             messagesLoaded: true,
             moment: moment,
+            messageKey: 1,
         }
     },
     methods: {
@@ -136,6 +137,12 @@ export default {
                 })
             // .then(res => console.log(res))
         },
+        reloadMomentJS() {
+            setInterval(() => {
+                this.messageKey = !this.messageKey;
+                console.log("Executed");
+            }, 30000)
+        },
     },
     created() {
         axios.get('api/user')
@@ -144,6 +151,7 @@ export default {
             })
 
         this.refreshMessages();
+        this.reloadMomentJS();
     }
 }
 </script>
