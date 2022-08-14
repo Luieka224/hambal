@@ -14,7 +14,7 @@
                 <div class="card card-compact w-96 bg-primary text-primary-content shadow-xl">
                     <div class="card-body">
                         <pre
-                            class="text-base-content bg-base-100 rounded-lg p-4">{{ appURL }}/m/{{ userDetails.slug }}</pre>
+                            class="text-base-content bg-base-100 rounded-lg p-4">http://localhost:8000/m/{{ userDetails.slug }}</pre>
                         <div class="card-actions justify-end">
                             <span class="btn btn-outline btn-sm text-primary-content" @click="copyToClipboard">Copy
                                 Link</span>
@@ -91,7 +91,6 @@
 import axios from 'axios'
 import moment from 'moment'
 
-
 export default {
     beforeRouteEnter(routeTo, routeFrom, next) {
         axios.get('api/user', {
@@ -119,7 +118,7 @@ export default {
     },
     methods: {
         copyToClipboard() {
-            navigator.clipboard.writeText(this.appURL+"/m/" + this.userDetails.slug);
+            navigator.clipboard.writeText("http://localhost:8000/m/" + this.userDetails.slug);
             this.isCopiedText = true;
             setTimeout(() => this.isCopiedText = false, 3000);
         },
