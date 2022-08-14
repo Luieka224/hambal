@@ -107,6 +107,7 @@ export default {
     },
     data() {
         return {
+            appURL: import.meta.env.VITE_APP_URL,
             isCopiedText: false,
             userDetails: [],
             messages: [],
