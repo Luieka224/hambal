@@ -28,6 +28,7 @@ import axios from 'axios'
 export default {
     data() {
         return {
+            appURL: import.meta.env.VITE_APP_URL,
             user_id: null,
             message: "",
             slug: this.$route.params.slug,
@@ -35,7 +36,7 @@ export default {
         }
     },
     beforeCreate() {
-        axios.post('http://localhost:8000/api/check-slug', {
+        axios.post(this.appURL+'/api/check-slug', {
             slug: this.$route.params.slug
         })
             .catch(res => {
@@ -48,7 +49,7 @@ export default {
     },
     methods: {
         sendMessage() {
-            axios.post('http://localhost:8000/api/messages', {
+            axios.post(this.appURL+'/api/messages', {
                 slug: this.slug,
                 message: this.message,
             })
