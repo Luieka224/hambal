@@ -6,6 +6,7 @@ import App from './App.vue'
 import Landing from './components/Landing.vue'
 import Home from './components/Home.vue'
 import SendMessage from './components/SendMessage.vue'
+import NotFound from './components/NotFound.vue'
 import Login from './components/auth/Login.vue'
 import Register from './components/auth/Register.vue'
 
@@ -37,6 +38,11 @@ const router = createRouter({
             name: 'SendMessage',
             component: SendMessage,
         },
+        {
+            path: "/:catchAll(.*)",
+            name: 'NotFound',
+            component: NotFound,
+        }
     ]
 })
 
