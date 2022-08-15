@@ -96,7 +96,6 @@ export default {
         axios.get('api/user', {
         })
             .then(res => {
-                console.log(res.data);
                 if (res.status === 200) {
                     next(vm => { })
                 };
@@ -118,7 +117,7 @@ export default {
     },
     methods: {
         copyToClipboard() {
-            navigator.clipboard.writeText(this.appURL+"/m/" + this.userDetails.slug);
+            navigator.clipboard.writeText(this.appURL + "/m/" + this.userDetails.slug);
             this.isCopiedText = true;
             setTimeout(() => this.isCopiedText = false, 3000);
         },
@@ -129,12 +128,10 @@ export default {
                     this.messagesLoaded = true;
                     this.messages = res.data;
                 })
-            // .then(res => console.log(res))
         },
         reloadMomentJS() {
             setInterval(() => {
                 this.messageKey = !this.messageKey;
-                console.log("Executed");
             }, 30000)
         },
     },
