@@ -61,12 +61,10 @@ export default {
                         password: this.password,
                         password_confirmation: this.password_confirmation,
                     }).then(res => {
-                        console.log(res)
                         if (res.status == (201 || 200)) this.$router.push('home');
                     })
                         .catch(error => {
-                            console.log(error)
-
+                            console.log("An error occured")
                         })
                 })
         }
