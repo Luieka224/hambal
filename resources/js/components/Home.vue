@@ -152,6 +152,7 @@
             </div>
         </div>
     </div>
+    <div class="min-h-[1rem] lg:hidden"></div>
     <Transition>
         <div v-if="isCopiedText" class="toast">
             <div class="alert alert-info">
