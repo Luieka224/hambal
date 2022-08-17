@@ -1,8 +1,6 @@
 <template>
-    <div class="min-h-[10vh]"></div>
-    <h1 class="text-2xl text-center font-bold uppercase">Register</h1>
-    <div class="min-h-[3rem]"></div>
-    <form class="w-[40%] mx-auto space-y-4">
+    <h1 class="text-2xl text-center font-bold uppercase mt-16 md:mt-24">Register</h1>
+    <form action="" class="md:w-[60%] lg:w-[40%] mx-6 md:mx-auto space-y-4 mt-6">
         <div class="form-control">
             <label class="label">
                 <span class="label-text">Username</span>
