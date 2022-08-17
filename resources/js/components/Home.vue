@@ -1,57 +1,132 @@
 <template>
     <div class="min-h-[1rem]"></div>
-    <div class="mx-32">
+    <div class="mx-4 lg:mx-32">
         <span class="text-lg uppercase leading-none">
             Hello there,
             <br>
             <span class="text-xl font-bold leading-none">{{ userDetails.username }}</span>
         </span>
     </div>
-    <div class="mx-32 flex space-x-16 mt-8">
-        <div class="space-y-4">
-            <div>
-                <h1 class="text-xl uppercase mb-2">Your Link</h1>
-                <div class="card card-compact w-96 bg-primary text-primary-content shadow-xl">
-                    <div class="card-body">
-                        <pre
-                            class="text-base-content bg-base-100 rounded-lg p-4">{{ appURL }}/m/{{ userDetails.slug }}</pre>
-                        <div class="card-actions justify-end">
-                            <span class="btn btn-outline btn-sm text-primary-content" @click="copyToClipboard">Copy
-                                Link</span>
+    <div class="mx-4 lg:mx-32 lg:flex lg:space-x-16 space-y-4 lg:space-y-0 mt-8 lg:mt-4">
+        <div class="mt-2">
+            <div class="space-y-4 lg:hidden">
+                <div>
+                    <div class="justify-between flex items-center">
+                        <h1 class="text-xl uppercase mb-2">Your Link</h1>
+                        <button type="button" class="btn btn-ghost lg:hidden" @click="expandCollapseCopyLink">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-8 h-8" viewBox="0 0 50 50">
+                                <path v-if="showCopyLink" d="M14.15 30.75 12 28.6l12-12 12 11.95-2.15 2.15L24 20.85Z" />
+                                <path v-else d="m24 30.75-12-12 2.15-2.15L24 26.5l9.85-9.85L36 18.8Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="card card-compact lg:w-96 bg-primary text-primary-content shadow-xl"
+                        v-if="showCopyLink">
+                        <div class="card-body">
+                            <input type="text" class="input text-base-content font-mono"
+                                :value="appURL + '/m/' + userDetails.slug" readonly>
+                            <div class="card-actions justify-end">
+                                <span class="btn btn-outline btn-sm text-primary-content" @click="copyToClipboard">Copy
+                                    Link</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="justify-between flex items-center">
+                        <h1 class="text-xl uppercase mb-2">Custom Message</h1>
+                        <button type="button" class="lg:hidden btn btn-ghost" @click="expandCollapseCustomMessage">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-8 h-8" viewBox="0 0 50 50">
+                                <path v-if="showCustomMessage" d="M14.15 30.75 12 28.6l12-12 12 11.95-2.15 2.15L24 20.85Z" />
+                                <path v-else d="m24 30.75-12-12 2.15-2.15L24 26.5l9.85-9.85L36 18.8Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="card card-compact lg:w-96 bg-primary text-primary-content shadow-xl"
+                        v-if="showCustomMessage">
+                        <div class="card-body">
+                            <input class="input text-base-content" readonly placeholder="Unlock to Send Me A Message">
+                            <div class="card-actions justify-end">
+                                <button
+                                    class="btn btn-outline btn-sm text-primary-content disabled:text-primary-content"
+                                    disabled>Unlock to Set Message</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between items-center">
+                        <h1 class="text-xl uppercase mb-2">Custom Slug</h1>
+                        <button type="button" class="lg:hidden btn btn-ghost" @click="expandCollapseCustomSlug">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-8 h-8" viewBox="0 0 50 50">
+                                <path v-if="showCustomSlug" d="M14.15 30.75 12 28.6l12-12 12 11.95-2.15 2.15L24 20.85Z" />
+                                <path v-else d="m24 30.75-12-12 2.15-2.15L24 26.5l9.85-9.85L36 18.8Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="card card-compact lg:w-96 bg-primary text-primary-content shadow-xl"
+                        v-if="showCustomSlug">
+                        <div class="card-body">
+                            <input class="input text-base-content read-only:text-black" readonly
+                                placeholder="Unlock to Set Custom Slug">
+                            <div class="card-actions justify-end">
+                                <button
+                                    class="btn btn-outline btn-sm text-primary-content disabled:text-primary-content"
+                                    disabled>
+                                    Unlock to Set Custom Slug
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div>
-                <h1 class="text-xl uppercase mb-2">Custom Message</h1>
-                <div class="card card-compact w-96 bg-primary text-primary-content shadow-xl">
-                    <div class="card-body">
-                        <input class="input text-base-content" readonly placeholder="Unlock to Send Me A Message">
-                        <div class="card-actions justify-end">
-                            <button class="btn btn-outline btn-sm text-primary-content disabled:text-primary-content"
-                                disabled>Unlock to Set Message</button>
+            <div class="space-y-4 hidden lg:block">
+                <div>
+                    <h1 class="text-xl uppercase mb-2">Your Link</h1>
+                    <div class="card card-compact lg:w-96 bg-primary text-primary-content shadow-xl">
+                        <div class="card-body">
+                            <input type="text" class="input text-base-content font-mono"
+                                :value="appURL + '/m/' + userDetails.slug" readonly>
+                            <div class="card-actions justify-end">
+                                <span class="btn btn-outline btn-sm text-primary-content" @click="copyToClipboard">Copy
+                                    Link</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div>
-                <h1 class="text-xl uppercase mb-2">Custom Slug</h1>
-                <div class="card card-compact w-96 bg-primary text-primary-content shadow-xl">
-                    <div class="card-body">
-                        <input class="input text-base-content read-only:text-black" disable readonly
-                            placeholder="Unlock to Set Custom Slug">
-                        <div class="card-actions justify-end">
-                            <button class="btn btn-outline btn-sm text-primary-content disabled:text-primary-content"
-                                disabled>
-                                Unlock to Set Custom Slug
-                            </button>
+                <div>
+                    <h1 class="text-xl uppercase mb-2">Custom Message</h1>
+                    <div class="card card-compact lg:w-96 bg-primary text-primary-content shadow-xl">
+                        <div class="card-body">
+                            <input class="input text-base-content" readonly placeholder="Unlock to Send Me A Message">
+                            <div class="card-actions justify-end">
+                                <button
+                                    class="btn btn-outline btn-sm text-primary-content disabled:text-primary-content"
+                                    disabled>Unlock to Set Message</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="text-xl uppercase mb-2">Custom Slug</h1>
+                    <div class="card card-compact lg:w-96 bg-primary text-primary-content shadow-xl">
+                        <div class="card-body">
+                            <input class="input text-base-content read-only:text-black" readonly
+                                placeholder="Unlock to Set Custom Slug">
+                            <div class="card-actions justify-end">
+                                <button
+                                    class="btn btn-outline btn-sm text-primary-content disabled:text-primary-content"
+                                    disabled>
+                                    Unlock to Set Custom Slug
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Messages -->
-        <div class="space-y-4 flex-1">
+        <div class="space-y-4 lg:flex-1">
             <div class="flex justify-between items-center">
                 <h1 class="text-xl uppercase">Messages</h1>
                 <button class="btn btn-ghost" @click="refreshMessages" type="button">
@@ -63,7 +138,8 @@
                     </svg>
                 </button>
             </div>
-            <div class="overflow-y-scroll p-4 max-h-[65vh] min-h-[65vh] space-y-4">
+            <div
+                class="overflow-y-scroll pl-0 p-4 max-h-[65vh] lg:min-h-[65vh] md:max-h-[80vh] md:min-h-[80vh] lg:max-h-[65vh] lg:min-h-[65vh] space-y-4">
                 <div v-for="message of messages" :key="messageKey"
                     class="card card-compact w-full bg-primary text-primary-content shadow-xl rounded-br-none">
                     <div class="card-body">
@@ -76,6 +152,7 @@
             </div>
         </div>
     </div>
+    <div class="min-h-[1rem] lg:hidden"></div>
     <Transition>
         <div v-if="isCopiedText" class="toast">
             <div class="alert alert-info">
@@ -113,6 +190,9 @@ export default {
             messagesLoaded: true,
             moment: moment,
             messageKey: 1,
+            showCopyLink: true,
+            showCustomMessage: false,
+            showCustomSlug: false,
         }
     },
     methods: {
@@ -133,6 +213,15 @@ export default {
             setInterval(() => {
                 this.messageKey = !this.messageKey;
             }, 30000)
+        },
+        expandCollapseCopyLink() {
+            this.showCopyLink = !this.showCopyLink;
+        },
+        expandCollapseCustomMessage() {
+            this.showCustomMessage = !this.showCustomMessage;
+        },
+        expandCollapseCustomSlug() {
+            this.showCustomSlug = !this.showCustomSlug;
         },
     },
     created() {
