@@ -174,7 +174,9 @@ export default {
         })
             .then(res => {
                 if (res.status === 200) {
-                    next(vm => { })
+                    next(vm => {
+                        vm.userDetails = res.data
+                    })
                 };
             })
             .catch(res => {
