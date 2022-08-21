@@ -1,4 +1,5 @@
 <template>
+    <!-- <div v-if="pageLoaded"> -->
     <div v-if="validLink">
         <div class="min-h-[3rem]"></div>
         <h1 class="text-2xl text-center font-bold uppercase">Send Me a Message!</h1>
@@ -22,7 +23,7 @@
             </div>
         </Transition>
     </div>
-    <div v-else>
+    <div v-else-if="!validLink">
         <NotFound />
     </div>
 </template>
@@ -32,15 +33,15 @@ import axios from 'axios'
 import NotFound from './NotFound.vue'
 
 export default {
-    beforeCreate() {
+    beforeRouteEnter(routeTo, routeFrom, next) {
         axios.post(import.meta.env.VITE_APP_URL + "/api/check-slug", {
-            slug: this.$route.params.slug
+            slug: routeTo.params.slug
         })
             .then(() => {
-                this.validLink = true
+                next(vm => vm.validLink = true)
             })
-            .catch(res => {
-                this.validLink = false
+            .catch(() => {
+                next(vm => vm.validLink = false)
             })
     },
     data() {
