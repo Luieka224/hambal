@@ -1,5 +1,4 @@
 <template>
-    <!-- <div v-if="pageLoaded"> -->
     <div v-if="validLink">
         <div class="min-h-[3rem]"></div>
         <h1 class="text-2xl text-center font-bold uppercase">Send Me a Message!</h1>
@@ -46,7 +45,6 @@ export default {
     },
     data() {
         return {
-            pageLoaded: false,
             appURL: import.meta.env.VITE_APP_URL,
             user_id: null,
             message: "",
