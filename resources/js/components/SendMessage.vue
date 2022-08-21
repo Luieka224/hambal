@@ -4,7 +4,7 @@
         <div class="min-h-[3rem]"></div>
         <h1 class="text-2xl text-center font-bold uppercase">Send Me a Message!</h1>
         <div class="min-h-[3rem]"></div>
-        <form action="" class="w-[40%] mx-auto space-y-4">
+        <form action="" class="lg:w-[40%] mx-4 lg:mx-auto space-y-4">
             <div class="w-full">
                 <textarea v-model="message" type="text" placeholder="Send Me a Message"
                     class="textarea textarea-bordered max-h-[30vh] w-full"></textarea>
