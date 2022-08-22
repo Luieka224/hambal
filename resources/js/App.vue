@@ -4,10 +4,11 @@
         <div>
             <RouterLink :to="{ name: 'Landing' }" class="text-3xl font-bold text-primary">Hambal</RouterLink>
         </div>
-        <div class="space-x-4" v-if="isHome">
+        <div class="space-x-4" v-if="isLoggedIn">
+            <RouterLink :to="{ name: 'Home' }" class="uppercase font-medium text-sm">Home</RouterLink>
             <button type="button" class="font-medium btn btn-primary py-0 px-4" @click="logoutUser">Logout</button>
         </div>
-        <div class="space-x-4" v-if="!isHome">
+        <div class="space-x-4" v-if="!isLoggedIn">
             <RouterLink :to="{ name: 'Login' }" class="uppercase font-medium text-sm">Login</RouterLink>
             <RouterLink :to="{ name: 'Register' }" class="font-medium btn btn-primary py-0 px-4">Register</RouterLink>
         </div>
@@ -56,8 +57,11 @@
 export default {
     data() {
         return {
-            isHome: false,
+            isLoggedIn: false,
         }
+    },
+    created() {
+        this.checkIfLoggedIn();
     },
     methods: {
         logoutUser() {
@@ -65,16 +69,27 @@ export default {
                 .then(res => {
                     this.$router.push({ name: "Landing" })
                 });
+
+            this.checkIfLoggedIn();
         },
+        checkIfLoggedIn() {
+            axios.get(import.meta.env.VITE_APP_URL+"/api/check-auth")
+                .then(res => {
+                    if (res.data === 1) {
+                        this.isLoggedIn = true;
+                    } else {
+                        this.isLoggedIn = false;
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+        }
     },
     watch: {
         $route(to, from) {
-            if (to.name == 'Home') {
-                this.isHome = true;
-            } else {
-                this.isHome = false;
-            }
-        }
+            this.checkIfLoggedIn();
+        },
     }
 }
 </script>

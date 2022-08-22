@@ -1,13 +1,13 @@
 <template>
     <div class="min-h-[1rem]"></div>
-    <div class="mx-4 lg:mx-32">
+    <div class="mx-4 md:mx-16 lg:mx-32">
         <span class="text-lg uppercase leading-none">
             Hello there,
             <br>
             <span class="text-xl font-bold leading-none">{{ userDetails.username }}</span>
         </span>
     </div>
-    <div class="mx-4 lg:mx-32 lg:flex lg:space-x-16 space-y-4 lg:space-y-0 mt-8 lg:mt-4">
+    <div class="mx-4 md:mx-16 lg:mx-32 lg:flex lg:space-x-16 space-y-4 lg:space-y-0 mt-8 lg:mt-4">
         <div class="mt-2">
             <div class="space-y-4 lg:hidden">
                 <div>
@@ -174,7 +174,9 @@ export default {
         })
             .then(res => {
                 if (res.status === 200) {
-                    next(vm => { })
+                    next(vm => {
+                        vm.userDetails = res.data
+                    })
                 };
             })
             .catch(res => {
