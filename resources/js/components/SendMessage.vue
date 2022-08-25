@@ -3,7 +3,7 @@
         <div class="min-h-[3rem]"></div>
         <h1 class="text-2xl text-center font-bold uppercase">Send Me a Message!</h1>
         <div class="min-h-[3rem]"></div>
-        <form action="" class="w-[40%] mx-auto space-y-4">
+        <form action="" class="lg:w-[40%] mx-4 lg:mx-auto space-y-4">
             <div class="w-full">
                 <textarea v-model="message" type="text" placeholder="Send Me a Message"
                     class="textarea textarea-bordered max-h-[30vh] w-full"></textarea>
@@ -22,7 +22,7 @@
             </div>
         </Transition>
     </div>
-    <div v-else>
+    <div v-else-if="!validLink">
         <NotFound />
     </div>
 </template>
@@ -32,20 +32,19 @@ import axios from 'axios'
 import NotFound from './NotFound.vue'
 
 export default {
-    beforeCreate() {
+    beforeRouteEnter(routeTo, routeFrom, next) {
         axios.post(import.meta.env.VITE_APP_URL + "/api/check-slug", {
-            slug: this.$route.params.slug
+            slug: routeTo.params.slug
         })
             .then(() => {
-                this.validLink = true
+                next(vm => vm.validLink = true)
             })
-            .catch(res => {
-                this.validLink = false
+            .catch(() => {
+                next(vm => vm.validLink = false)
             })
     },
     data() {
         return {
-            pageLoaded: false,
             appURL: import.meta.env.VITE_APP_URL,
             user_id: null,
             message: "",

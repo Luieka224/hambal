@@ -26,5 +26,6 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('/messages', [MessagesController::class, 'index']);
 });
 
+Route::get('/check-auth', fn() => Auth::check());
 Route::post('/check-slug', [UserController::class, 'checkSlug']);
 Route::post('/messages', [MessagesController::class, 'store']);
